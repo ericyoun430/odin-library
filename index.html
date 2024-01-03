@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <title>Library</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <h1>Library</h1>
+        </div>
+        <div class="popup">
+            <form action="/example">
+                <div class="inputs">
+                    <div class="input-container">
+                        <label for="book_name">Book Name</label>
+                        <input type="text" id="book_name">
+                    </div>
+                    <div class="input-container">
+                        <label for="book_author">Book Author</label>
+                        <input type="text" id="book_author">
+                    </div>
+                    <div class="input-container">
+                        <label for="book_length">Book Length (pages)</label>
+                        <input type="number" id="book_length">
+                    </div>
+    
+                    <div class="input-container">
+                        <label for="book_read_status">Read?</label>
+                        <div class="read">
+                            <input type="checkbox" id="book_read_status">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="form-submit">Add Book</button>
+            </form>
+        </div>
+        <div class="upper-card-container">
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Test</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m424-312 282-282-56-56-226 226-114-114-56 56 170 170ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-author">Eric</span>
+                        <span class="card-length">240</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <button class="open-popup-btn" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+            </button>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
