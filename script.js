@@ -1,48 +1,125 @@
-
-
 const myLibrary = [];
 
-function Book(name, author, length, read) {
+function Book(id, name, author, length, read) {
+    this.id = id;
     this.name = name;
     this.author = author;
     this.length = length;
     this.read = read;
 }
 
-function addBookToLibrary() {
-    const newBook = new Book(bookName, bookAuthor, bookLength, read);
-    myLibrary.push(newBook);
-}
-
-function displayBook() {
-    for (book in myLibrary) {
-        const card = document.createElement("div");
-        card.classList.add("card");
-
-        const card_header = document.createElement("div");
-        card_header.classList.add("card-header");
-
-    }
-}
-
-const cardContainer = document.querySelector('.card-container');
 const addToLibrary = document.querySelector('.open-popup-btn');
-
+const popup = document.querySelector('.popup');
 
 addToLibrary.addEventListener('click', () => {
-
-    const popup = document.querySelector('.popup');
     if (!popup.classList.contains("show")) {
         popup.classList.add("show");
     }
-})
+});
 
-
+const cardContainer = document.querySelector('.card-container');
 const addBook = document.querySelector('.form-submit');
-const bookName = document.querySelector('#book_name');
-const bookAuthor = document.querySelector('#book_author');
-const bookLength = document.querySelector('#book_length');
-const read = document.querySelector('#book_read_status');
+let bookCount = 0;
 
-addBook.addEventListener('click', addBookToLibrary);
+addBook.addEventListener('click', () => {
+    const formData = new FormData(document.querySelector('form'));
+    const bookName = formData.get("book_name");
+    const bookAuthor = formData.get("book_author");
+    const bookLength = formData.get("book_length");
+    const read = formData.has("book_read_status") ? true : false;
+    const newBook = new Book(bookCount, bookName, bookAuthor, bookLength, read);
+    bookCount+=1;
 
+    // console.log(newBook.name +':' + newBook.author + ',' + newBook.length + ',' + newBook.read);
+    myLibrary.push(newBook);
+    popup.classList.remove("show");
+    displayLibrary();
+});
+
+function displayLibrary() {
+    while (cardContainer.hasChildNodes()) {
+        cardContainer.removeChild(cardContainer.lastChild);
+    }
+    myLibrary.forEach((book) => {
+        // console.log(book);
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        const readBtnStatus = book.read ? "Unread" : "Read";
+
+        card.innerHTML = `
+        <div class="card-header">
+            <span class="card-title">${book.name}</span>
+        ` + 
+        //if read checkbox, otherwise non checkbox
+        (book.read ? 
+        `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M713-600 600-713l56-57 57 57 141-142 57 57-198 198ZM200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Z"/></svg>`
+        :
+        `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-40v-640q0-33 23.5-56.5T200-760h400q33 0 56.5 23.5T680-680v640L400-160 120-40Zm80-122 200-86 200 86v-518H200v518Zm560 2v-680H240v-80h520q33 0 56.5 23.5T840-840v680h-80ZM200-680h400-400Z"/></svg>`
+        ) + 
+        `
+        </div>
+        <div class="card-body">
+            <span class="card-author">${book.author}</span>
+            <span class="card-length">${book.length}</span>
+        </div>
+        `;
+        // <div class="card-buttons">
+        //     <button type="button" class="card-button read-btn">${readBtnStatus}</button>
+        //     <button type="button" class="card-button delete-btn">Delete</button>
+        // </div>
+        
+        const cardButtons = document.createElement("div");
+        cardButtons.classList.add("card-buttons");
+
+        const readBtn = document.createElement("button");
+        readBtn.classList.add("card-button", "read-btn");
+        readBtn.setAttribute("type","button");
+        readBtn.textContent = (book.read ? "Unread" : "read");
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("card-button", "delete-btn");
+        deleteBtn.setAttribute("type","button");
+        deleteBtn.textContent = "Delete";
+
+        cardButtons.appendChild(readBtn);
+        cardButtons.appendChild(deleteBtn);
+        card.appendChild(cardButtons);
+        cardContainer.appendChild(card);
+
+        // readBtn.addEventListener('click', () => {
+            
+        //     //if book is read then we are changing to unread, so it should say read
+        //     //add appropriate icon to represent if the book is currently read
+        //     if (book.read) {
+        //         readBtn.nodeValue = "Read";
+        //         card.firstChild.lastChild.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-40v-640q0-33 23.5-56.5T200-760h400q33 0 56.5 23.5T680-680v640L400-160 120-40Zm80-122 200-86 200 86v-518H200v518Zm560 2v-680H240v-80h520q33 0 56.5 23.5T840-840v680h-80ZM200-680h400-400Z"/></svg>`;
+        //     } else {
+        //         readBtn.nodeValue = "Unread";
+        //         card.firstChild.lastChild.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M713-600 600-713l56-57 57 57 141-142 57 57-198 198ZM200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Z"/></svg>`;
+        //     }
+        // })
+
+        //delete button
+        deleteBtn.addEventListener('click', () => {
+            card.remove();
+        })
+
+
+    })
+}
+
+//remove node if press remove, change icon if read and change button text
+// const deleteBtnNodes = document.querySelectorAll('.delete-btn');
+// const readBtnNodes = document.querySelectorAll('.read-btn');
+
+// for (let i = 0; i < deleteBtnNodes.length; i++) {
+//     const nodeToBeDeleted = deleteBtnNodes[i];
+//     const changeStatusOfNode = readBtnNodes[i];
+
+//     deleteBtnNodes[i].addEventListener('click',()=> {
+//         nodeToBeDeleted.parentNode.parentNode.remove();
+//     })
+
+    
+
+// }

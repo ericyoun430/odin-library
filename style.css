@@ -69,6 +69,7 @@ form {
     width:50%;
     justify-content: center;
     align-items: center;
+    gap: 15px;
 }
 
 .card {
@@ -77,6 +78,10 @@ form {
     padding: 20px;
     border: solid black 1px;
     border-radius: 5px;
+}
+
+.card > * {
+    padding: 2.5px 0px;
 }
 
 .card-header {
@@ -90,12 +95,26 @@ form {
     padding-right: 10px;
 }
 
-.card-body {
-    padding-top: 10px;
+.card-author {
+    padding-right: 20px;
 }
 
-.card-author {
-    padding-right:30px;
+.card-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.card-button {
+    border: solid black 1px;
+    border-radius: 5px;
+    text-align: center;
+    height: 30px;
+    width: 100%;
+}
+
+.card-button:active {
+    filter: brightness(.6);
 }
 
 /* add books button */
@@ -118,6 +137,6 @@ form {
     border: solid black 2px;
 }
 
-button:active {
-    border: solid gray 2px;
+.open-popup-btn:active {
+    filter: brightness(.6);
 }
